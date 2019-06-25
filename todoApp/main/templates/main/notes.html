@@ -1,0 +1,31 @@
+
+<div class="container">
+
+    <div class="row">
+        {% for note in notes %}
+            <div class="col s12 m6 l4">
+                <div class="card hoverable {% if  note.isAchieved %} teal lighten-2 {% endif %}">
+                    <div class="card-content">
+                        <p style="font-size:70%">Published {{note.published_time}}</p>
+                        <div class="card-title">{{note.name}}</div>
+                        <p>{{note.detail}}</p>
+                    </div>
+                </div>
+                <form action="/deleteNote" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="note_name" value="{{  note.name }}">
+                    <input type="hidden" name="note_detail" value="{{ note.detail }}">
+                    
+                    {% if  note.isAchieved %}
+                        <button type="submit" class="btn"> Delete</button>
+                        <button type="submit" class="btn" formaction="/achieved"> Achieved</button>
+                    {% else %}
+                        <button type="submit" class="btn white black-text"> Delete</button>
+                        <button type="submit" class="btn white black-text"  formaction="/achieved"> Not Achieved</button>
+                    {% endif %} 
+                </form>  
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
